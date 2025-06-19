@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
           &copy; {new Date().getFullYear()} RegExp IDE. All rights reserved.
         </p>
         <p className="text-xs mt-2">
-          Made with ❤️ by the Dev's Cafe team.
+          Made with ❤️ by the Dev&apos;s Cafe team.
         </p>
       </div>
     </footer>

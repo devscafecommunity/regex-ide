@@ -10,7 +10,7 @@ const Header: React.FC = () => {
           Crie, teste e entenda expressões regulares com facilidade
         </p>
         {/* 
-        Botão para visitar o website do Dev's Cafe (devscafe.org)
+        Botão para visitar o website do Dev&apos;s Cafe (devscafe.org)
         */}
         <a 
           href="https://devscafe.org" 
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           rel="noopener noreferrer" 
           className="mt-4 inline-block bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded"
         >
-          Visite o Dev's Cafe
+          Visite o Dev&apos;s Cafe
         </a>
         <div className="mt-2 text-xs text-gray-400">
           Um lugar para desenvolvedores e entusiastas de tecnologia.

@@ -111,7 +111,7 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTag, setActiveTag] = useState('all');
 
-  const commonPatterns: CommonPattern[] = [
+  const commonPatterns: CommonPattern[] = useMemo(() => [
     // Padrões básicos
     { label: 'Dígito', regex: '\\d', tag: 'basic', description: 'Qualquer dígito (0-9)' },
     { label: 'Letra', regex: '[a-zA-Z]', tag: 'basic', description: 'Qualquer letra maiúscula ou minúscula' },
@@ -121,7 +121,7 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
     { label: 'Início da string', regex: '^', tag: 'basic', description: 'Início da linha ou string' },
     { label: 'Fim da string', regex: '$', tag: 'basic', description: 'Fim da linha ou string' },
     { label: 'Grupo de captura', regex: '(...)', tag: 'basic', description: 'Captura um grupo para reutilização' },
-    { label: 'Alternativa (ou)', regex: 'a|b', tag: 'basic', description: 'Corresponde a "a" ou "b"' },
+    { label: 'Alternativa (ou)', regex: 'a|b', tag: 'basic', description: 'Corresponde a &quot;a&quot; ou &quot;b&quot;' },
     { label: 'Classe de caracteres', regex: '[abc]', tag: 'basic', description: 'Qualquer caractere entre colchetes' },
     { label: 'Negação de classe', regex: '[^abc]', tag: 'basic', description: 'Qualquer caractere EXCETO os especificados' },
     { label: 'Um ou mais', regex: '+', tag: 'basic', description: 'Uma ou mais ocorrências' },
@@ -150,7 +150,7 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
     { label: 'Grupo não capturante', regex: '(?:...)', tag: 'advanced', description: 'Agrupa sem capturar' },
     { label: 'Retrovisor', regex: '\\1', tag: 'advanced', description: 'Referência ao primeiro grupo capturado' },
     { label: 'Retrovisor nomeado', regex: '\\k<name>', tag: 'advanced', description: 'Referência a grupo nomeado' },
-    { label: 'Quantificador possessivo', regex: '++', tag: 'advanced', description: 'Quantificador "greedy" sem backtrack' },
+    { label: 'Quantificador possessivo', regex: '++', tag: 'advanced', description: 'Quantificador &quot;greedy&quot; sem backtrack' },
 
     // Padrões de validação comuns
     { label: 'Email', regex: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}', tag: 'validation', description: 'Valida formato de email' },
@@ -167,7 +167,7 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
     { label: 'Cartão de crédito', regex: '\\b(?:\\d[ -]*?){13,16}\\b', tag: 'validation', description: 'Formatos comuns de cartões' },
     { label: 'CPF ou CNPJ', regex: '(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2})|(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})', tag: 'validation', description: 'Aceita ambos formatos' },
     { label: 'IPv4', regex: '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)', tag: 'validation', description: 'Endereços IPv4 válidos' },
-  ];
+  ], []);
 
   const tags = ['all', 'basic', 'advanced', 'validation'];
 
@@ -177,12 +177,10 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
       const matchesSearch = pattern.label.toLowerCase().includes(searchTerm.toLowerCase()) || 
                            pattern.regex.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            (pattern.description && pattern.description.toLowerCase().includes(searchTerm.toLowerCase()));
-      
       const matchesTag = activeTag === 'all' || pattern.tag === activeTag;
-      
       return matchesSearch && matchesTag;
     });
-  }, [searchTerm, activeTag]);
+  }, [searchTerm, activeTag, commonPatterns]);
 
   return (
     <div className="my-6 p-4 bg-gray-800 rounded-lg">
@@ -257,7 +255,7 @@ const CommonRegex: React.FC<{ onSelect: (regex: string) => void }> = ({ onSelect
           ))
         ) : (
           <div className="col-span-full text-center py-8 text-gray-500">
-            Nenhum padrão encontrado para "{searchTerm}"
+            Nenhum padrão encontrado para &quot;{searchTerm}&quot;
           </div>
         )}
       </div>
